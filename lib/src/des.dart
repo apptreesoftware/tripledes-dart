@@ -14,7 +14,7 @@ class DESEngine extends BaseEngine {
   void init(bool forEncryption, List<int?> key) {
     super.init(forEncryption, key);
     // Select 56 bits according to PC1
-    var keyBits = <int?>[56];
+    var keyBits = List<int?>.filled(56, null, growable: false);
     for (var i = 0; i < 56; i++) {
       var keyBitPos = PC1[i] - 1;
       keyBits[i] = (rightShift32(
@@ -54,9 +54,7 @@ class DESEngine extends BaseEngine {
   }
 
   int processBlock(List<int?> M, int offset) {
-    List<List<int>?> invSubKeys = [
-      [16]
-    ];
+    List<List<int>?> invSubKeys = List.filled(16, null);
     if (!forEncryption) {
       for (var i = 0; i < 16; i++) {
         invSubKeys[i] = _subKeys![15 - i];
